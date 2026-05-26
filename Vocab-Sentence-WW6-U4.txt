@@ -1,0 +1,40 @@
+// Vocabulary Data
+const vocabData = [
+    { word: "jacket", pronoun: "it", img: "jacket.png", emoji: "🧥" },
+    { word: "smartphone", pronoun: "it", img: "smartphone.png", emoji: "📱" },
+    { word: "umbrella", pronoun: "it", img: "umbrella.png", emoji: "☂️" },
+    { word: "watch", pronoun: "it", img: "watch.png", emoji: "⌚" },
+    { word: "water bottle", pronoun: "it", img: "bottle.png", emoji: "💧" },
+    { word: "key", pronoun: "it", img: "key.png", emoji: "🔑" },
+    { word: "glasses", pronoun: "they", img: "glasses.png", emoji: "👓" }
+];
+
+// Sentence Data
+const sentenceData = [
+    // 1. Whose + singular/plural (Varied blanks in Q&A)
+    { q: "____ jacket is it?", options: ["Whose", "What", "Who", "Where"], ans: "Whose", img: "jacket.png", emoji: "🧥" },
+    { q: "Whose ____ is it?", options: ["smartphone", "glasses", "key", "watch"], ans: "smartphone", img: "smartphone.png", emoji: "📱" },
+    { q: "Whose umbrella ____ it?", options: ["is", "are", "do", "am"], ans: "is", img: "umbrella.png", emoji: "☂️" },
+    { q: "Whose ____ are they?", options: ["glasses", "key", "watch", "jacket"], ans: "glasses", img: "glasses.png", emoji: "👓" },
+    { q: "Whose watch ____ they?", options: ["are", "is", "do", "it"], ans: "are", img: "watch.png", emoji: "⌚" },
+    { q: "____ key is it?", options: ["Whose", "Who", "What", "Where"], ans: "Whose", img: "key.png", emoji: "🔑" },
+
+    // 2. It's/They're (Varied blanks)
+    { q: "____ my jacket.", options: ["It's", "They're", "Is", "Are"], ans: "It's", img: "jacket.png", emoji: "🧥" },
+    { q: "It's ____ umbrella.", options: ["my", "it", "are", "is"], ans: "my", img: "umbrella.png", emoji: "☂️" },
+    { q: "____ my glasses.", options: ["They're", "It's", "Is", "Are"], ans: "They're", img: "glasses.png", emoji: "👓" },
+    { q: "They're ____ glasses.", options: ["my", "it", "is", "he"], ans: "my", img: "glasses.png", emoji: "👓" },
+    { q: "____ a water bottle.", options: ["It's", "They're", "Is", "Are"], ans: "It's", img: "bottle.png", emoji: "💧" },
+    { q: "____ a new smartphone.", options: ["It's", "They're", "Is", "Are"], ans: "It's", img: "smartphone.png", emoji: "📱" },
+    { q: "____ Kevin's key.", options: ["It's", "They're", "Is", "Are"], ans: "It's", img: "key.png", emoji: "🔑" },
+    { q: "____ her watches.", options: ["They're", "It's", "Is", "Are"], ans: "They're", img: "watch.png", emoji: "⌚" },
+
+    // 3. Q&A: Full Q&A pattern, randomization of possessive patterns
+    { q: "Whose watch is it? ____ Amy's watch.", options: ["It's", "They're", "It", "is"], ans: "It's", img: "watch.png", emoji: "⌚" },
+    { q: "Whose smartphone is it? It ____ her smartphone.", options: ["is", "are", "It's", "it"], ans: "is", img: "smartphone.png", emoji: "📱" },
+    { q: "Whose key is it? It's ____ key.", options: ["Kevin", "Kevins", "Kevins'", "Kevin's"], ans: "Kevin's", img: "key.png", emoji: "🔑" },
+    { q: "Whose jacket is it? It's ____ jacket.", options: ["is", "he", "his", "she"], ans: "his", img: "jacket.png", emoji: "🧥" },
+    { q: "Whose glasses are they?  ____ my glasses.", options: ["They're", "They", "There", "Their"], ans: "They're", img: "glasses.png", emoji: "👓" },
+    { q: "Whose water bottle is it? {Pronoun} ____ her water bottle.", options: ["is", "are", "am", "do"], ans: "is", img: "bottle.png", emoji: "💧" },
+    { q: "Whose umbrella is it? {Pronoun} ____ Amy's umbrella.", options: ["is", "are", "am", "do"], ans: "is", img: "umbrella.png", emoji: "☂️" }
+];
