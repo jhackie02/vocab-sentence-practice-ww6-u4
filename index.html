@@ -442,7 +442,7 @@
         <h1>LEVEL 1</h1>
         <div class="fn-box">
             <h2>Missing Letter</h2>
-            <p>1. Look at the picture and word.<br>2. Find the missing letter.<br>3. Answer fast for a high score!<br>4. You need 76 points to pass.</p>
+            <p>1. Look at the picture and word.<br>2. Find the missing letter.<br>3. Answer fast for a high score!<br>4. You need 75 points to pass.</p>
             <button class="fn-btn btn-green" onclick="startLevel(1)">PLAY LEVEL 1</button>
         </div>
     </div>
@@ -450,7 +450,7 @@
     <!-- Screen 4: Gameplay L1 -->
     <div id="screen-l1-game" class="screen">
         <div class="top-bar">
-            <div class="stat-box" id="l1-progress">Q: 1/10</div>
+            <div class="stat-box" id="l1-progress">Q: 1/15</div>
             <div class="stat-box" id="l1-timer">⏱️ 90s</div>
             <div class="stat-box" id="l1-score-display">Score: 100</div>
         </div>
@@ -484,7 +484,7 @@
         <h1>LEVEL 2</h1>
         <div class="fn-box">
             <h2>Fill in the Blank</h2>
-            <p>1. Read the sentence.<br>2. Pick the missing word(s).<br>3. Answer fast for a high score!<br>4. You need 76 points to pass.</p>
+            <p>1. Read the sentence.<br>2. Pick the missing word(s).<br>3. Answer fast for a high score!<br>4. You need 75 points to pass.</p>
             <button class="fn-btn btn-green" onclick="startLevel(2)">PLAY LEVEL 2</button>
         </div>
     </div>
@@ -492,8 +492,8 @@
     <!-- Screen 7: Gameplay L2 -->
     <div id="screen-l2-game" class="screen">
         <div class="top-bar">
-            <div class="stat-box" id="l2-progress">Q: 1/10</div>
-            <div class="stat-box" id="l2-timer">⏱️ 120s</div>
+            <div class="stat-box" id="l2-progress">Q: 1/15</div>
+            <div class="stat-box" id="l2-timer">⏱️ 90s</div>
             <div class="stat-box" id="l2-score-display">Score: 100</div>
         </div>
         <div class="game-content">
@@ -833,10 +833,10 @@ const sentenceData = [
     function gameTick() {
         if (gameState.time > 0) {
             gameState.time--;
-            // Time penalty: If they take longer than 60 seconds, penalize 0.8 points per second.
-            // This ensures finishing in <= 60 seconds keeps the perfect score (100).
-            if (gameState.time < 60) {
-                gameState.score -= 0.8; 
+            // Time penalty: If they take longer than 50 seconds, penalize 0.4 points per second.
+            // This ensures finishing in <= 50 seconds keeps the perfect score (100).
+            if (gameState.time < 50) {
+                gameState.score -= 0.4; // 0.4 points per second after 50s, so max penalty is 16 points if they take the full 90s
             }
             updateTopBar();
         } else {
@@ -846,7 +846,7 @@ const sentenceData = [
 
     function updateTopBar() {
         const lvl = gameState.level;
-        document.getElementById(`l${lvl}-progress`).innerText = `Q: ${gameState.currentIndex + 1}/10`;
+        document.getElementById(`l${lvl}-progress`).innerText = `Q: ${gameState.currentIndex + 1}/15`;
         document.getElementById(`l${lvl}-timer`).innerText = `⏱️ ${gameState.time}s`;
         document.getElementById(`l${lvl}-score-display`).innerText = `Score: ${Math.max(0, Math.round(gameState.score))}`;
     }
@@ -880,7 +880,7 @@ const sentenceData = [
         gameState.selectedOption = null;
         document.getElementById(`l${lvl}-send-btn`).disabled = true;
 
-        if (gameState.currentIndex >= 10) {
+        if (gameState.currentIndex >= 15) {
             endLevel();
         } else {
             updateTopBar();
@@ -897,23 +897,23 @@ const sentenceData = [
         if (finalScore < 0) finalScore = 0;
         if (finalScore > 100) finalScore = 100;
         
-        // If they didn't finish 10 questions, apply harsh penalty for uncompleted questions
-        const uncompleted = 10 - gameState.currentIndex;
+        // If they didn't finish 15 questions, apply harsh penalty for uncompleted questions
+        const uncompleted = 15 - gameState.currentIndex;
         if(uncompleted > 0) {
-            finalScore -= (uncompleted * 10);
+            finalScore -= (uncompleted * 10); // 10 points penalty per uncompleted question
             if (finalScore < 0) finalScore = 0;
         }
 
         scores[`l${lvl}`] = finalScore;
 
-        const passed = finalScore >= 76;
+        const passed = finalScore >= 75;
         
         document.getElementById(`l${lvl}-final-score`).innerText = finalScore;
         document.getElementById(`l${lvl}-result-title`).innerText = passed ? "PASS!" : "FAIL!";
         document.getElementById(`l${lvl}-result-title`).style.color = passed ? "var(--fn-green)" : "var(--fn-red)";
         document.getElementById(`l${lvl}-result-msg`).innerText = passed 
             ? "Excellent! You can move to the next level." 
-            : "You need 76 points to pass. Be faster and accurate!";
+            : "You need 75 points to pass. Be faster and accurate!";
         
         const nextBtn = lvl === 1 ? document.getElementById('btn-next-l2') : document.getElementById('btn-final-done');
         nextBtn.style.display = passed ? "inline-block" : "none";
@@ -930,7 +930,7 @@ const sentenceData = [
         gameState.questions = [];
         const alphabet = "abcdefghijklmnopqrstuvwxyz";
         
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 15; i++) {
             // Pick random vocab
             const v = vocabData[Math.floor(Math.random() * vocabData.length)];
             let rawWord = v.word.replace(/^a\s+/, ''); // strip 'a ' for missing letter
@@ -992,10 +992,10 @@ const sentenceData = [
         let pool = [...sentenceData];
         shuffleArray(pool);
         
-        // Pick 10, if pool is smaller, duplicate some
-        while(pool.length < 10) pool = pool.concat([...sentenceData]);
+        // Pick 15, if pool is smaller, duplicate some
+        while(pool.length < 15) pool = pool.concat([...sentenceData]);
         
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 15; i++) {
             let q = { ...pool[i], options: [...pool[i].options] };
             
             // Dynamic pronoun replacement applied immediately to q, ans, and options
